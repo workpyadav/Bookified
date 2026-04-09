@@ -253,9 +253,9 @@
     @apply hover:rounded-lg font-medium text-lg;
   }
 
-  /* ===========================================
-     DESIGN SYSTEM FOUNDATION
-     =========================================== */
+  
+  /* DESIGN SYSTEM FOUNDATION */
+     
   .shadow-soft-sm {
     box-shadow: var(--shadow-soft-sm);
   }
@@ -309,9 +309,7 @@
     @apply w-5 h-5;
   }
 
-  /* ===========================================
-     NAVBAR COMPONENT
-     =========================================== */
+  /* NAVBAR COMPONENT */
   .logo-text {
     @apply font-semibold text-xl hidden sm:block text-black;
   }
@@ -331,9 +329,7 @@
     @apply hidden sm:inline text-base font-medium text-black;
   }
 
-  /* ===========================================
-     BANNER/ALERT COMPONENTS
-     =========================================== */
+  /*BANNER/ALERT COMPONENTS*/
   .error-banner {
     @apply w-full mb-4 p-4 bg-red-50 border border-red-200 rounded-xl;
   }
@@ -362,9 +358,7 @@
     @apply text-[var(--text-primary)] font-medium;
   }
 
-  /* ===========================================
-     LAYOUT CONTAINERS
-     =========================================== */
+  /* LAYOUT CONTAINERS */
   .vapi-main-container {
     @apply w-full flex flex-col items-center max-w-4xl mx-auto;
   }
@@ -381,9 +375,7 @@
     @apply mt-10 text-center text-sm text-(--text-secondary) max-w-md;
   }
 
-  /* ===========================================
-     VAPI CONTROLS COMPONENT
-     =========================================== */
+  /*VAPI CONTROLS COMPONENT*/
   .vapi-header-card {
     @apply flex items-center gap-6 bg-[#f3e4c7] rounded-[14px] p-6 relative overflow-hidden;
   }
@@ -481,9 +473,7 @@
     @apply text-sm font-semibold text-[var(--text-primary)] text-center truncate;
   }
 
-  /* ===========================================
-     BOOKS LIBRARY COMPONENT
-     =========================================== */
+  /* BOOKS LIBRARY COMPONENT */
   .library-hero-card {
     @apply bg-[#f3e4c7] rounded-[14px] p-5 md:p-6 lg:py-6 lg:px-10 relative overflow-hidden flex items-center;
   }
@@ -556,9 +546,7 @@
     @apply bg-[var(--bg-secondary)] rounded-[14px] p-12 max-w-md mx-auto;
   }
 
-  /* ===========================================
-     TRANSCRIPT COMPONENT
-     =========================================== */
+  /*TRANSCRIPT COMPONENT*/
   .transcript-container {
     @apply w-full bg-white rounded-[14px] h-full min-h-0 flex flex-col;
   }
@@ -611,9 +599,7 @@
     @apply text-[var(--text-muted)] text-sm mt-1;
   }
 
-  /* ===========================================
-     VOICE SELECTOR COMPONENT
-     =========================================== */
+  /* VOICE SELECTOR COMPONENT */
   .voice-selector-options {
     @apply flex gap-4;
   }
@@ -640,9 +626,7 @@
     @apply opacity-50 cursor-not-allowed;
   }
 
-  /* ===========================================
-     BOOK CARD COMPONENT
-     =========================================== */
+  /* BOOK CARD COMPONENT */
   .book-card {
     @apply flex flex-col transition-all duration-200 h-full border-0;
 
@@ -677,9 +661,7 @@
     @apply text-sm md:text-base font-medium text-[#3d485e] line-clamp-1;
   }
 
-  /* ===========================================
-     UPLOAD FORM COMPONENT
-     =========================================== */
+  /* UPLOAD FORM COMPONENT*/
   .upload-dropzone {
     @apply flex flex-col items-center justify-center h-[165px] bg-white rounded-[6px] cursor-pointer transition-all;
 
@@ -720,9 +702,7 @@
     @apply w-full p-4 bg-white rounded-lg text-lg font-medium text-[#222] placeholder:text-[#999];
   }
 
-  /* ===========================================
-     BACK BUTTON (FLOATING)
-     =========================================== */
+  /* BACK BUTTON (FLOATING) */
   .back-btn-floating {
     @apply fixed top-24 left-6 z-50 size-12 rounded-full bg-white border border-[var(--border-subtle)] flex items-center justify-center transition-all;
     box-shadow: var(--shadow-soft);

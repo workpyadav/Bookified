@@ -49,7 +49,7 @@ const UploadForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="new-book-wrapper space-y-8"
       >
-        {/* ═══════════════ 1. PDF Upload ═══════════════ */}
+        {/* 1. PDF Upload  */}
         <div>
           <label className="form-label">Book PDF File</label>
           <input
@@ -103,7 +103,7 @@ const UploadForm = () => {
           )}
         </div>
 
-        {/* ═══════════════ 2. Cover Image ═══════════════ */}
+        {/* 2. Cover Image */}
         <div>
           <label className="form-label">
             Cover Image{' '}
@@ -164,7 +164,7 @@ const UploadForm = () => {
           )}
         </div>
 
-        {/* ═══════════════ 3. Title ═══════════════ */}
+        {/*  3. Title*/}
         <div>
           <label className="form-label">Title</label>
           <input
@@ -180,7 +180,7 @@ const UploadForm = () => {
           )}
         </div>
 
-        {/* ═══════════════ 4. Author ═══════════════ */}
+        {/* 4. Author */}
         <div>
           <label className="form-label">Author Name</label>
           <input
@@ -196,7 +196,7 @@ const UploadForm = () => {
           )}
         </div>
 
-        {/* ═══════════════ 5. Voice Selector ═══════════════ */}
+        {/* 5. Voice Selector*/}
         <div>
           <label className="form-label">Choose Assistant Voice</label>
 
@@ -279,7 +279,7 @@ const UploadForm = () => {
           )}
         </div>
 
-        {/* ═══════════════ Submit ═══════════════ */}
+        {/* Submit*/}
         <button type="submit" className="form-btn" disabled={isSubmitting}>
           {isSubmitting ? 'Uploading…' : 'Begin Synthesis'}
         </button>
