@@ -3,6 +3,7 @@ import { Geist, IBM_Plex_Serif, Inter, Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
 
@@ -37,8 +38,12 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", " relative font-sans antialiased", ibmPlexSerif.variable, monaSans.variable, "font-sans", inter.variable, geistHeading.variable)}
     >
-      <Navbar />
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ClerkProvider>
+          <Navbar />
+          {children}
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

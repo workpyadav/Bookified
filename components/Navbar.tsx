@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import logo from '@/assets/logo.png'
 import { usePathname } from 'next/navigation'
-import { SignedIn, SignedOut, SingnInButton, UserButton, useClerk } from "@clerk/nextjs";
+import { Show, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -14,7 +14,7 @@ const navItems = [
 
 const Navbar = () => {
     const pathName = usePathname();
-    const { name } = useUser();
+    const { user } = useUser();
 
   return (
     <header className="w-full fixed z-50 bg-('--bg-primary')">
@@ -37,10 +37,10 @@ const Navbar = () => {
                })} 
             
                <div className='flex gap-7.5 items-center'>
-                    <SignedOut>
-                        <SingnInButton mode="model" />
-                    </SignedOut>
-                    <SignedIn>
+                    <Show when="signed-out">
+                        <SignInButton mode="modal" />
+                    </Show>
+                    <Show when="signed-in">
                         <div className='nav-user-link'>
                             <UserButton />
                             {user?.firstName && (
@@ -50,7 +50,7 @@ const Navbar = () => {
                             )}
                         </div>
                         
-                    </SignedIn>
+                    </Show>
                </div>
                
             </nav>
