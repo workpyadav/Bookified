@@ -9,7 +9,7 @@ import BookSegment from "@/database/models/book-segment.model";
 export const getAllBooks = async () => {
     try {
         await connectToDatabase();
-        const books = await Book.find({createdAt: -1}).lean();
+        const books = await Book.find().sort({createdAt: -1}).lean();
 
         return {
             success: true,
