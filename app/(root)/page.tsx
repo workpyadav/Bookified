@@ -5,6 +5,7 @@ import { sampleBooks } from '@/lib/constants'
 
 export default async function Page() {
   const { userId } = await auth()
+  
 
   return (
     <main className="wrapper container flex-1 w-full flex flex-col items-center">

@@ -35,9 +35,9 @@ const UploadForm = () => {
     },
   });
 
-  const selectedFile = form.watch('file');
+  const selectedFile = form.watch('pdfFile');
   const selectedCover = form.watch('coverImage');
-  const selectedVoice = form.watch('voice');
+  const selectedVoice = form.watch('persona');
 
   const onSubmit = async (data: BookUploadFormValues) => {
     if(!userId){
@@ -106,7 +106,7 @@ const UploadForm = () => {
         fileSize: pdfFile.size,
       });
 
-      if(!book.success) throw new Error("Failde to create book");
+      if(!book.success) throw new Error(book.error || "Failed to create book");
 
       if(book.alreadyExists) {
         toast.info("Book with same title already exists");
@@ -151,14 +151,14 @@ const UploadForm = () => {
             accept=".pdf,application/pdf"
             className="hidden"
             onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                form.setValue('file', file, { shouldValidate: true });
+              const files = e.target.files;
+              if (files && files.length > 0) {
+                form.setValue('pdfFile', files, { shouldValidate: true });
               }
             }}
           />
 
-          {!selectedFile ? (
+          {!selectedFile || selectedFile.length === 0 ? (
             <div
               className="upload-dropzone border-2 border-dashed border-[var(--border-medium)]"
               onClick={() => pdfInputRef.current?.click()}
@@ -171,13 +171,13 @@ const UploadForm = () => {
             <div className="upload-dropzone upload-dropzone-uploaded border-2 border-dashed border-[#8B7355]">
               <div className="flex items-center gap-3">
                 <p className="upload-dropzone-text font-semibold">
-                  {selectedFile.name}
+                  {selectedFile[0].name}
                 </p>
                 <button
                   type="button"
                   className="upload-dropzone-remove"
                   onClick={() => {
-                    form.setValue('file', undefined as unknown as File, {
+                    form.setValue('pdfFile', undefined as unknown as FileList, {
                       shouldValidate: true,
                     });
                     if (pdfInputRef.current) pdfInputRef.current.value = '';
@@ -189,9 +189,9 @@ const UploadForm = () => {
             </div>
           )}
 
-          {form.formState.errors.file && (
+          {form.formState.errors.pdfFile && (
             <p className="text-red-500 text-sm mt-1">
-              {form.formState.errors.file.message as string}
+              {form.formState.errors.pdfFile.message as string}
             </p>
           )}
         </div>
@@ -210,14 +210,14 @@ const UploadForm = () => {
             accept="image/jpeg,image/jpg,image/png,image/webp"
             className="hidden"
             onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                form.setValue('coverImage', file, { shouldValidate: true });
+              const files = e.target.files;
+              if (files && files.length > 0) {
+                form.setValue('coverImage', files, { shouldValidate: true });
               }
             }}
           />
 
-          {!selectedCover ? (
+          {!selectedCover || selectedCover.length === 0 ? (
             <div
               className="upload-dropzone border-2 border-dashed border-[var(--border-medium)]"
               onClick={() => coverInputRef.current?.click()}
@@ -232,13 +232,13 @@ const UploadForm = () => {
             <div className="upload-dropzone upload-dropzone-uploaded border-2 border-dashed border-[#8B7355]">
               <div className="flex items-center gap-3">
                 <p className="upload-dropzone-text font-semibold">
-                  {selectedCover.name}
+                  {selectedCover[0].name}
                 </p>
                 <button
                   type="button"
                   className="upload-dropzone-remove"
                   onClick={() => {
-                    form.setValue('coverImage', undefined, {
+                    form.setValue('coverImage', undefined as unknown as FileList, {
                       shouldValidate: true,
                     });
                     if (coverInputRef.current) coverInputRef.current.value = '';
@@ -291,7 +291,6 @@ const UploadForm = () => {
 
         {/* 5. Voice Selector*/}
         <div>
-          name = "persona"
           <label className="form-label">Choose Assistant Voice</label>
 
           {/* Male Voices */}
@@ -315,7 +314,7 @@ const UploadForm = () => {
                     type="radio"
                     value={key}
                     className="accent-[#663820]"
-                    {...form.register('voice')}
+                    {...form.register('persona')}
                   />
                   <div>
                     <p className="font-semibold text-[var(--text-primary)]">
@@ -351,7 +350,7 @@ const UploadForm = () => {
                     type="radio"
                     value={key}
                     className="accent-[#663820]"
-                    {...form.register('voice')}
+                    {...form.register('persona')}
                   />
                   <div>
                     <p className="font-semibold text-[var(--text-primary)]">
@@ -366,9 +365,9 @@ const UploadForm = () => {
             })}
           </div>
 
-          {form.formState.errors.voice && (
+          {form.formState.errors.persona && (
             <p className="text-red-500 text-sm mt-1">
-              {form.formState.errors.voice.message}
+              {form.formState.errors.persona.message}
             </p>
           )}
         </div>

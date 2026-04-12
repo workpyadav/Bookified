@@ -6,6 +6,24 @@ import { generateSlug, serializeData } from "../utils";
 import Book from "@/database/models/book.model";
 import BookSegment from "@/database/models/book-segment.model";
 
+export const getAllBooks = async () => {
+    try {
+        await connectToDatabase();
+        const books = await Book.find({createdAt: -1}).lean();
+
+        return {
+            success: true,
+            data: serializeData(books)
+        }
+
+    } catch (e) {
+        console.error('Error connecting to database', e);
+        return {
+            success: false, error: e
+        }
+    }
+}
+
 export const checkBookExists = async (title: string) => {
     try {
         await connectToDatabase();
@@ -23,9 +41,9 @@ export const checkBookExists = async (title: string) => {
             exists:false,
         }
     } catch (e) {
-        console.error('Error cheacking book exists', e);
+        console.error('Error checking book exists', e);
         return {
-            exists: false, error: e
+            exists: false, error: e instanceof Error ? e.message : String(e)
         }
     }
 }
@@ -59,7 +77,7 @@ export const createBook = async (data: CreateBook) => {
 
         return {
             success: false,
-            error: e,
+            error: e instanceof Error ? e.message : String(e),
         }
     }
 }
@@ -91,7 +109,7 @@ export const saveBookSegments = async (bookId: String, clerkId: string, segments
         console.log('Deleted book segments and book due to failure to save segments.');
         return {
             success: false,
-            error: e,
+            error: e instanceof Error ? e.message : String(e),
         }
     }
 }
