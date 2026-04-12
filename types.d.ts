@@ -5,9 +5,9 @@ import { LucideIcon } from 'lucide-react';
 import z from 'zod';
 import { UploadSchema } from '@/lib/zod';
 
-// ============================================
+
 // DATABASE MODELS
-// ============================================
+
 
 export interface IBook extends Document {
     _id: string;
@@ -49,9 +49,9 @@ export interface IVoiceSession extends Document {
     updatedAt: Date;
 }
 
-// ============================================
+
 // FORM & INPUT TYPES
-// ============================================
+
 
 export type BookUploadFormValues = z.infer<typeof UploadSchema>;
 

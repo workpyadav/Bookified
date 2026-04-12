@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
 
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ClerkProvider>
           <Navbar />
+          <Toaster />
           {children}
         </ClerkProvider>
       </body>

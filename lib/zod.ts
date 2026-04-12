@@ -7,23 +7,6 @@ import {
 } from './constants';
 
 export const UploadSchema = z.object({
-  file: z
-    .instanceof(File, { message: 'Please upload a PDF file' })
-    .refine((f) => f.size <= MAX_FILE_SIZE, 'File size must be under 50MB')
-    .refine(
-      (f) => ACCEPTED_PDF_TYPES.includes(f.type),
-      'Only PDF files are accepted'
-    ),
-
-  coverImage: z
-    .instanceof(File)
-    .refine((f) => f.size <= MAX_IMAGE_SIZE, 'Image must be under 10MB')
-    .refine(
-      (f) => ACCEPTED_IMAGE_TYPES.includes(f.type),
-      'Only JPEG, PNG, and WebP images are accepted'
-    )
-    .optional(),
-
   title: z
     .string()
     .min(2, 'Title must be at least 2 characters')
@@ -34,5 +17,23 @@ export const UploadSchema = z.object({
     .min(2, 'Author name must be at least 2 characters')
     .max(200, 'Author name must be under 200 characters'),
 
-  voice: z.string().min(1, 'Please select a voice'),
+  persona: z.string().min(1, 'Please select a voice'),
+
+  pdfFile: z
+    .custom<FileList>()
+    .refine((files) => files?.length === 1, 'Please upload a PDF file')
+    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, 'PDF must be smaller than 50 MB')
+    .refine((files) => ACCEPTED_PDF_TYPES.includes(files?.[0]?.type), 'Only .pdf files are accepted'),
+
+  coverImage: z
+    .custom<FileList>()
+    .refine(
+      (files) => !files || files.length === 0 || files[0].size <= MAX_IMAGE_SIZE,
+      'Image must be smaller than 10 MB',
+    )
+    .refine(
+      (files) => !files || files.length === 0 || ACCEPTED_IMAGE_TYPES.includes(files[0].type),
+      'Only .jpg, .png, and .webp images are accepted',
+    )
+    .optional(),
 });
