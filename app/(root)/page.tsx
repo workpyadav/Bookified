@@ -8,7 +8,6 @@ export default async function Page() {
   const bookResults = await getAllBooks()
   const books = bookResults.success ? bookResults.data ?? [] : []
   console.log("result"+bookResults.data)
-
   return (
     <main className="wrapper container flex-1 w-full flex flex-col items-center">
       <Hero />

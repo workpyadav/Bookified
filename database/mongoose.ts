@@ -17,6 +17,7 @@ export const connectToDatabase = async () => {
 
     if (!cached.promise){
         cached.promise = mongoose.connect(MONGODB_URI, {bufferCommands: false});
+        
     }
     try {
         cached.conn = await cached.promise;
@@ -25,7 +26,7 @@ export const connectToDatabase = async () => {
         console.error('MongoDB connection error. Please make sure MongoDB is running. '+e);
         throw e;
     }
-
+    
     console.info('Connected to MongoDB');
     return cached.conn;
 }

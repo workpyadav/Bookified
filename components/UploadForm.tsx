@@ -17,7 +17,7 @@ import { upload } from '@vercel/blob/client';
 
 const UploadForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {userId} = useAuth();
+  const { userId } = useAuth();
   const router = useRouter();
 
 
@@ -40,7 +40,7 @@ const UploadForm = () => {
   const selectedVoice = form.watch('persona');
 
   const onSubmit = async (data: BookUploadFormValues) => {
-    if(!userId){
+    if (!userId) {
       return toast.error("Please login to upload books");
       ("")
     }
@@ -49,8 +49,9 @@ const UploadForm = () => {
 
 
     try {
+
       const existsCheck = await checkBookExists(data.title);
-      if(existsCheck.exists && existsCheck.book) {
+      if (existsCheck.exists && existsCheck.book) {
         toast.info("Book with same title already exists");
         form.reset()
         router.push(`/books/${existsCheck.book.slug}`)
@@ -62,8 +63,8 @@ const UploadForm = () => {
 
       const parsedPDF = await parsePDFFile(pdfFile);
 
-      if(parsedPDF.content.length == 0) {
-        toast.error("Failed to parse PDF. Please try aagain with a different file.");
+      if (parsedPDF.content.length == 0) {
+        toast.error("Failed to parse PDF. Please try again with a different file.");
         return;
       }
 
@@ -75,7 +76,7 @@ const UploadForm = () => {
 
       let coverUrl: string;
 
-      if(data.coverImage && data.coverImage.length > 0) {
+      if (data.coverImage && data.coverImage.length > 0) {
         const coverFile = data.coverImage[0];
         const uploadedCoverBlob = await upload(`${fileTitle}_cover.png`, coverFile, {
           access: 'public',
@@ -106,19 +107,19 @@ const UploadForm = () => {
         fileSize: pdfFile.size,
       });
 
-      if(!book.success) throw new Error(book.error || "Failed to create book");
+      if (!book.success) throw new Error(book.error || "Failed to create book");
 
-      if(book.alreadyExists) {
+      if (book.alreadyExists) {
         toast.info("Book with same title already exists");
         form.reset()
-        router.push(`/books/${existsCheck.book.slug}`)
+        router.push(`/books/${book.data.slug}`)
         return;
       }
 
       const segments = await saveBookSegments(book.data._id, userId, parsedPDF.content);
-      
-      if(!segments.success) {
-        toast.error("Failde to save book segments");
+
+      if (!segments.success) {
+        toast.error("Failed to save book segments");
         throw new Error("Failed to save book segments");
       }
 
@@ -304,11 +305,10 @@ const UploadForm = () => {
               return (
                 <label
                   key={key}
-                  className={`voice-selector-option ${
-                    isSelected
+                  className={`voice-selector-option ${isSelected
                       ? 'voice-selector-option-selected'
                       : 'voice-selector-option-default'
-                  }`}
+                    }`}
                 >
                   <input
                     type="radio"
@@ -340,11 +340,10 @@ const UploadForm = () => {
               return (
                 <label
                   key={key}
-                  className={`voice-selector-option ${
-                    isSelected
+                  className={`voice-selector-option ${isSelected
                       ? 'voice-selector-option-selected'
                       : 'voice-selector-option-default'
-                  }`}
+                    }`}
                 >
                   <input
                     type="radio"

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { ui } from '@clerk/ui'
 
 const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
 
@@ -40,7 +41,7 @@ export default function RootLayout({
       className={cn("h-full", " relative font-sans antialiased", ibmPlexSerif.variable, monaSans.variable, "font-sans", inter.variable, geistHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
-        <ClerkProvider>
+        <ClerkProvider ui = {ui}>
           <Navbar />
           <Toaster />
           {children}

@@ -82,7 +82,7 @@ export const createBook = async (data: CreateBook) => {
     }
 }
 
-export const saveBookSegments = async (bookId: String, clerkId: string, segments: TextSegment[]) => {
+export const saveBookSegments = async (bookId: string, clerkId: string, segments: TextSegment[]) => {
     try {
         await connectToDatabase();
         console.log('Saving book segments..');
@@ -104,12 +104,37 @@ export const saveBookSegments = async (bookId: String, clerkId: string, segments
     } catch (e) {
         console.error('Error saving book segments', e);
 
-        await BookSegment.deleteMany({book: bookId});
+        await BookSegment.deleteMany({bookId: bookId});
         await Book.findByIdAndDelete(bookId);
         console.log('Deleted book segments and book due to failure to save segments.');
         return {
             success: false,
             error: e instanceof Error ? e.message : String(e),
+        }
+    }
+}
+export const getBookBySlug = async (slug: string) => {
+    try {
+        await connectToDatabase();
+        const book = await Book.findOne({ slug }).lean();
+
+        if (!book) {
+            return {
+                success: false,
+                error: 'Book not found'
+            }
+        }
+
+        return {
+            success: true,
+            data: serializeData(book)
+        }
+
+    } catch (e) {
+        console.error('Error fetching book by slug', e);
+        return {
+            success: false,
+            error: e instanceof Error ? e.message : String(e)
         }
     }
 }
