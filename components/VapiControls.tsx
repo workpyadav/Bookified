@@ -35,7 +35,12 @@ const formatTime = (seconds: number) => {
                 {isActive && (status === 'speaking' || status === 'thinking') && (
                   <span className="vapi-pulse-ring" />
                 )}
-                <button onClick={isActive ? stop : start} disabled={status == 'connecting'} className="vapi-mic-btn shadow-soft-md relative z-10">
+                <button 
+                onClick={isActive ? stop : start} 
+                disabled={status == 'connecting'}
+                arial-label={isActive ? "Stop voice assistant" : "Start voice assistant"}
+                title={isActive ? "Stop voice assistant" : "Start voice assistant"} 
+                className="vapi-mic-btn shadow-soft-md relative z-10">
                   {isActive ? (
                     <IconMicrophone className="w-8 h-8 text-[#663820]" />
                   ) : (
