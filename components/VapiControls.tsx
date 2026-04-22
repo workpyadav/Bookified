@@ -8,7 +8,7 @@ import Transcript from './Transcript';
 
 
 const VapiControls = ({book}: {book: IBook}) => {
-    const { status, isActive, messages, currentMessage, currentUserMessage, duration, start, stop, clearErrors, } = useVapi(book)
+    const { status, isActive, messages, currentMessage, currentUserMessage, duration, start, stop, clearError, } = useVapi(book)
 const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;

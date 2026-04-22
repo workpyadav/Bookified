@@ -29,7 +29,7 @@ export const startVoiceSession = async (clerkId: string, bookId: string): Promis
     }
 }
 
-export const endVoiceSession = async (sessionId: string, durationSeconds: number): Promise<{ success: boolean }> => {
+export const endVoiceSession = async (sessionId: string, durationSeconds: number): Promise<{ success: boolean; error?: string }> => {
     try {
         await connectToDatabase();
         
