@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import BookCard from '@/components/BookCard'
 import { getAllBooks } from '@/lib/actions/book.actions'
 import SearchBar from '@/components/SearchBar'
+import { Suspense } from 'react'
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +19,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
 
       <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 mt-12 gap-4">
         <h2 className="section-title">Recent Books</h2>
-        <SearchBar />
+        <Suspense fallback={<div className="h-10 w-64 rounded-full bg-gray-100 animate-pulse"></div>}>
+          <SearchBar />
+        </Suspense>
       </div>
 
       <div className='library-books-grid w-full'>
