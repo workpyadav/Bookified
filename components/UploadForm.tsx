@@ -107,12 +107,19 @@ const UploadForm = () => {
         fileSize: pdfFile.size,
       });
 
-      if (!book.success) throw new Error(book.error || "Failed to create book");
+      if (!book.success) {
+        if (book.error?.includes('maximum number of books')) {
+          toast.error(book.error);
+          router.push('/subscriptions');
+          return;
+        }
+        throw new Error(book.error || "Failed to create book");
+      }
 
       if (book.alreadyExists) {
         toast.info("Book with same title already exists");
         form.reset()
-        router.push(`/books/${book.data.slug}`)
+        router.push(`/books/${existsCheck.book.slug}`)
         return;
       }
 

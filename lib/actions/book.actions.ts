@@ -6,11 +6,24 @@ import { generateSlug, serializeData } from "../utils";
 import Book from "@/database/models/book.model";
 import BookSegment from "@/database/models/book-segment.model";
 import { revalidatePath } from "next/cache";
+import { getUserPlan } from "../subscription";
+import { PLAN_LIMITS } from "../subscription-constants";
 
-export const getAllBooks = async () => {
+export const getAllBooks = async (query?: string) => {
     try {
         await connectToDatabase();
-        const books = await Book.find().sort({createdAt: -1}).lean();
+
+        let filter: any = {};
+        if (query) {
+            filter = {
+                $or: [
+                    { title: { $regex: query, $options: 'i' } },
+                    { author: { $regex: query, $options: 'i' } }
+                ]
+            };
+        }
+
+        const books = await Book.find(filter).sort({createdAt: -1}).lean();
 
         return {
             success: true,
@@ -65,9 +78,27 @@ export const createBook = async (data: CreateBook) => {
             }
         }
 
-        //Todo: Check subscription limits before creating a book
+        const { auth } = await import("@clerk/nextjs/server");
+        const { userId } = await auth();
 
-        const book = await Book.create({...data, slug, totalSegments: 0})
+        if (!userId || userId != data.clerkId) {
+            return { success: false, error: "Unauthorized" };
+        }
+
+        const plan = await getUserPlan();
+        const limits = PLAN_LIMITS[plan];
+
+        const bookCount = await Book.countDocuments({ clerkId: userId });
+
+        if (bookCount >= limits.maxBooks) {
+            return {
+                success: false,
+                error: `You have reached the maximum number of books (${limits.maxBooks}) allowed for your ${plan} plan. Please upgrade to add more.`,
+            }
+        }
+
+        const book = await Book.create({...data, clerkId: userId, slug, totalSegments: 0});
+
 
         revalidatePath('/')
 

@@ -780,10 +780,10 @@
 /* Pricing cards container */
 .clerk-pricing-table-wrapper {
   padding: 0.5rem;
-  background: var(--bg-primary);
+  background: transparent;
 }
 
-/* Center all wrappers */
+/*
 .clerk-pricing-table-wrapper > div,
 .clerk-pricing-table-wrapper > div > div {
   display: flex !important;
@@ -792,12 +792,12 @@
   gap: 20px !important;
 }
 
-/* Individual cards */
 .clerk-pricing-table-wrapper > div > div > div {
   position: relative;
   flex: 1 1 300px !important;
   max-width: 400px !important;
 }
+*/
 
 /* Card styling - with soft shadow */
 .clerk-pricing-table-wrapper [class*='card'],

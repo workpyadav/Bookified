@@ -5,6 +5,17 @@ import { LucideIcon } from 'lucide-react';
 import z from 'zod';
 import { UploadSchema } from '@/lib/zod';
 
+// BILLING & SUBSCRIPTION TYPES
+
+export type PlanType = 'free' | 'standard' | 'pro';
+
+export interface PlanLimits {
+    maxBooks: number;
+    maxSessionsPerMonth: number;
+    maxDurationMinutes: number;
+    hasSessionHistory: boolean;
+}
+
 
 // DATABASE MODELS
 

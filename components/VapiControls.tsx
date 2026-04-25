@@ -8,7 +8,7 @@ import Transcript from './Transcript';
 
 
 const VapiControls = ({book}: {book: IBook}) => {
-    const { status, isActive, messages, currentMessage, currentUserMessage, duration, start, stop, clearError, } = useVapi(book)
+    const { status, isActive, messages, currentMessage, currentUserMessage, duration, start, stop, clearError, limitError, maxDurationSeconds, remainingSeconds, showTimeWarning } = useVapi(book)
 const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -19,6 +19,16 @@ const formatTime = (seconds: number) => {
     <>
     
           <div className="vapi-main-container space-y-8">
+            {limitError && (
+              <div className="warning-banner w-full relative">
+                <div className="warning-banner-content pr-8">
+                  <span className="warning-banner-text">{limitError}</span>
+                </div>
+                <button onClick={clearError} className="absolute right-3 top-3 text-[var(--text-secondary)] hover:text-black">
+                   ✕
+                </button>
+              </div>
+            )}
         {/* Header Card */}
         <div className="vapi-header-card w-full">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 w-full">
@@ -74,8 +84,10 @@ const formatTime = (seconds: number) => {
                 </div>
 
                 {/* Timer Badge */}
-                <div className="vapi-status-indicator shadow-soft-sm">
-                  <span className="vapi-status-text">{formatTime(duration)}/15:00</span>
+                <div className={`vapi-status-indicator shadow-soft-sm ${showTimeWarning ? 'bg-red-50 border border-red-200' : ''}`}>
+                  <span className={`vapi-status-text ${showTimeWarning ? 'text-red-600' : ''}`}>
+                    {formatTime(duration)} / {formatTime(maxDurationSeconds)}
+                  </span>
                 </div>
               </div>
             </div>
